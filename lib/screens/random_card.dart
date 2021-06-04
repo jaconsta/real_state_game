@@ -24,7 +24,7 @@ class _RandomCardState extends State<RandomCard> {
     int deckCount = arguments['deckCount'];
     // List<String> cards = arguments['data'];
     int randomCard = new Random().nextInt(deckCount);
-    String cardText = FlutterI18n.translate(context, 'card_$deckName$randomCard');// cards[randomCard];
+    String cardText = FlutterI18n.translate(context, 'card-$deckName$randomCard');// cards[randomCard];
 
     return Scaffold(
         appBar: AppBar(

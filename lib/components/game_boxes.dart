@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -93,9 +94,11 @@ class _DiceBoxState extends State<DiceBox> {
   static const diceFaces = 6;
   int diceOne = 0;
   int diceTwo = 0;
+  final player = AudioCache();
 
   void onTap() {
     var random = new Random();
+    player.play('audio/Shake_And_Roll_Dice-SoundBible-591494296.wav');
     HapticFeedback.mediumImpact();
 
     setState(() {
