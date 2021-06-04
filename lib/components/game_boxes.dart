@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -21,7 +22,7 @@ class FortuneBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, RandomCard.id, arguments: {'data': fortuneData.fortuneChestCards, 'title': 'Fortune'});
+        Navigator.pushNamed(context, RandomCard.id, arguments: {'data': fortuneData.fortuneChestCards, 'deckName': 'fortune', 'deckCount': 14, 'title': 'Fortune'});
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +42,7 @@ class CommunityChestBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, RandomCard.id, arguments: {'data': lootChestData.lootChestCards, 'title': 'Loot chest'});
+        Navigator.pushNamed(context, RandomCard.id, arguments: {'data': lootChestData.lootChestCards, 'deckName': 'chest', 'deckCount': 15,  'title': 'Loot chest'});
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -95,6 +96,8 @@ class _DiceBoxState extends State<DiceBox> {
 
   void onTap() {
     var random = new Random();
+    HapticFeedback.mediumImpact();
+
     setState(() {
       diceOne = random.nextInt(diceFaces) + 1;
       diceTwo = random.nextInt(diceFaces) + 1;

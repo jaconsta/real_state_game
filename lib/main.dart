@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:real_state_game/screens/main_game.dart';
 import 'package:real_state_game/screens/money_screen.dart';
@@ -27,6 +29,21 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.cyan,
         scaffoldBackgroundColor: Color(0xFFccfd8dc),
       ),
+      supportedLocales: [
+        const Locale('en', ''),
+        const Locale('de', '')
+      ],
+      localizationsDelegates: [
+        FlutterI18nDelegate(
+          translationLoader: FileTranslationLoader(basePath: 'assets/i18n', useCountryCode: false),
+          missingTranslationHandler: (key, locale) {
+            print("--- Missing Key: $key, languageCode: ${locale.languageCode}");
+          },
+        ),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       routes: routes,
       initialRoute: MainGameScreen.id,
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/widgets/I18nText.dart';
 
 import 'package:real_state_game/components/game_boxes.dart';
 import 'package:real_state_game/constants.dart';

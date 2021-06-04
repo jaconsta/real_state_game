@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:real_state_game/data/properties.dart';
 import 'package:real_state_game/models/owned_property.dart';
@@ -81,14 +82,15 @@ class RealStateAdd extends StatelessWidget {
         !properties.containsKey(realState.id));
   }
 
-  TextButton renderOptions({PropertyCard realState, onPressed, selectedId}) {
+  TextButton renderOptions({BuildContext context, PropertyCard realState, onPressed, selectedId}) {
+    String propertyName = FlutterI18n.translate(context, 'property-${realState.id}');
     return TextButton(
         style: selectedId == realState.id
             ? TextButton.styleFrom(backgroundColor: Colors.deepPurple.shade50)
             : null,
         onPressed: onPressed,
         child: Text(
-          '${realState.name}   (\$${realState.purchasePrice})',
+          '$propertyName   (\$${realState.purchasePrice})',
           style: TextStyle(color: realState.color),
         ));
   }
@@ -109,6 +111,7 @@ class RealStateAdd extends StatelessWidget {
               scrollDirection: Axis.vertical,
               children: getUnselectedCards()
                   .map((PropertyCard realState) => renderOptions(
+                      context: context,
                       realState: realState,
                       selectedId: selectedId,
                       onPressed: () {
@@ -180,6 +183,8 @@ class RealStateOverview extends StatelessWidget {
   }
 
   void showPropertyInformation(BuildContext context) {
+    String propertyName = FlutterI18n.translate(context, 'property-${propertyCard.id}');
+
     AwesomeDialog(
         context: context,
         borderSide: BorderSide(color: propertyCard.color, width: 5),
@@ -188,7 +193,7 @@ class RealStateOverview extends StatelessWidget {
         animType: AnimType.BOTTOMSLIDE,
         body: Column(
           children: [
-            Text(propertyCard.name),
+            Text(propertyName),
             Divider(
               color: propertyCard.color,
               thickness: 2,
@@ -204,9 +209,11 @@ class RealStateOverview extends StatelessWidget {
   }
 
   void showHouseInformation(BuildContext context, { String pType, int quantity, int limit, Function addOne, Function removeOne }) {
+    String propertyName = FlutterI18n.translate(context, 'property-${propertyCard.id}');
+
     AwesomeDialog(
       context: context,
-      title: propertyCard.name,
+      title: propertyName,
       desc: '$quantity ${pType}(s)',
       btnOkText: quantity >= limit ? '-' : 'Add one',
       btnCancelText: quantity == 0 ? '-' : 'Remove',
@@ -216,10 +223,12 @@ class RealStateOverview extends StatelessWidget {
   }
 
   void showPropertyExtraOptions(BuildContext context, { Function onSell, Function onMortgage }) {
+    String propertyName = FlutterI18n.translate(context, 'property-${propertyCard.id}');
+
     AwesomeDialog(
       context: context,
       dialogType: DialogType.WARNING,
-      title: propertyCard.name,
+      title: propertyName,
       desc: 'Extras...',
       btnOkText: '(un) Mortgage',
       btnCancelText: 'Sell',
@@ -235,6 +244,7 @@ class RealStateOverview extends StatelessWidget {
       builder: (BuildContext context, StateSetter setState) {
         int ownedHouses = ownedProperty.ownedHouses;
         bool isMortgaged = ownedProperty.isMortgaged;
+        String propertyName = FlutterI18n.translate(context, 'property-${propertyCard.id}');
 
         void addOneHouse () {
           onAddHouse(propertyCard.id, 1);
@@ -285,7 +295,7 @@ class RealStateOverview extends StatelessWidget {
                   onPressed: () {
                     showPropertyInformation(context);
                   },
-                  child: Text(propertyCard.name)),
+                  child: Text(propertyName)),
               Expanded(child: SizedBox(width: 1.0)),
               if (propertyCard.type == property) ...[
                 if(ownedProperty.isMortgaged) FaIcon(FontAwesomeIcons.ban, color: Colors.cyan,),

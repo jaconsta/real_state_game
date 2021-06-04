@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class RandomCard extends StatefulWidget {
   static const id = 'RandomCard';
@@ -19,9 +20,11 @@ class _RandomCardState extends State<RandomCard> {
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context).settings.arguments as Map;
     String title = arguments['title'];
-    List<String> cards = arguments['data'];
-    int randomCard = new Random().nextInt(cards.length);
-    String cardText = cards[randomCard];
+    String deckName = arguments['deckName'];
+    int deckCount = arguments['deckCount'];
+    // List<String> cards = arguments['data'];
+    int randomCard = new Random().nextInt(deckCount);
+    String cardText = FlutterI18n.translate(context, 'card_$deckName$randomCard');// cards[randomCard];
 
     return Scaffold(
         appBar: AppBar(
